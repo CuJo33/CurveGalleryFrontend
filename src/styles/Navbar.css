@@ -1,0 +1,36 @@
+.navbar {
+  background-color: rgba(0, 128, 128, 0.685) !important;
+  height: 10vh;
+  position: absolute;
+  top: 0;
+  display: flex;
+}
+.logo {
+  width: 100px;
+  height: 100px;
+  padding-top: 10px;
+}
+.nav-list {
+  display: flex !important;
+  align-items: flex-start;
+  justify-content: center;
+  justify-content: space-around;
+  border-radius: 5px;
+  z-index: 1;
+}
+.nav-list a {
+  color: white !important;
+  font-size: 24px;
+  font-weight: 100;
+  text-decoration: none;
+  margin-left: 20px;
+  padding: 6px 10px;
+}
+.nav-list a:hover {
+  border-bottom: 0.3px solid white;
+}
+@media only screen and (max-width: 600px) {
+  .nav-list {
+    background-color: rgba(0, 0, 0, 0.644);
+  }
+}

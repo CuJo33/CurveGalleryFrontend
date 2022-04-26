@@ -1,0 +1,39 @@
+.dashboard {
+  margin-top: 140px;
+}
+.dashboard-button {
+  border: none;
+  padding: 6px 12px;
+  background-color: teal;
+  color: white;
+  margin-left: 10px;
+  border-radius: 5px;
+}
+.no-booking {
+  margin-left: 10px;
+}
+.create-booking > h3 {
+  margin-left: 10px;
+}
+
+.seeJob {
+  border: none;
+  border: 1px solid gray;
+  background-color: white;
+  padding: 6px 12px;
+}
+.seeJob:hover {
+  background-color: teal;
+  color: white;
+}
+
+.acceptQuote {
+  border: none;
+  border: 1px solid gray;
+  background-color: white;
+  padding: 6px 12px;
+}
+.acceptQuote:hover {
+  background-color: teal;
+  color: white;
+}
