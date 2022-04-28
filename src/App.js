@@ -9,14 +9,12 @@ import Container from "react-bootstrap/Container";
 // import Cujo_head from "./cujo_head.jpg";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import "./App.css";
+import "./styles/App.css";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Services from "./pages/Services";
 import Contact from "./pages/Contact";
-import Test from "./test/Test";
 import Booking from "./pages/Booking";
-import LoginEmployee from "./pages/LoginEmployee";
 
 import { ProtectedRoute } from "./protectedRoute/ProtectedRoute";
 import Footer from "./components/Footer";
@@ -29,18 +27,22 @@ function App() {
   const [token, changeToken] = useState(
     window.localStorage.getItem("authToken")
   );
-  const [clientId, cClientId] = useState(
-    window.localStorage.getItem("clientId")
+  const [userId, cUserId] = useState(
+    window.localStorage.getItem("userId")
   );
-  const [passedClientId, cPassedClientId] = useState(
-    window.localStorage.getItem("passedClientId")
+  const [username, cUsername] = useState(
+    window.localStorage.getItem("username")
   );
-  const [employeeId, cEmployeeId] = useState(
-    window.localStorage.getItem("employeeId")
+  const [passedUserId, cPassedUserId] = useState(
+    window.localStorage.getItem("passedUserId")
   );
-  const [employeeRole, cEmployeeRole] = useState(
-    window.localStorage.getItem("employeeRole")
-  );
+
+  // const [employeeId, cEmployeeId] = useState(
+  //   window.localStorage.getItem("employeeId")
+  // );
+  // const [employeeRole, cEmployeeRole] = useState(
+  //   window.localStorage.getItem("employeeRole")
+  // );
 
   const client = new ApiClient(
     () => token,
@@ -51,31 +53,35 @@ function App() {
     // cEmployeeId("614dab91d76d0c1576f8b9e5");
   }, []);
 
-  const login = (t, c) => {
+  const login = (t, c, u) => {
     window.localStorage.setItem("authToken", t);
-    window.localStorage.setItem("clientId", c);
+    window.localStorage.setItem("userId", c);
+    window.localStorage.setItem("username", u);
     changeToken(t);
-    cClientId(c);
+    cUserId(c);
+    cUsername(u);
   };
 
-  const loginEmployee = (t, c, r) => {
-    window.localStorage.setItem("authToken", t);
-    window.localStorage.setItem("employeeId", c);
-    window.localStorage.setItem("employeeRole", r);
-    changeToken(t);
-    cEmployeeId(c);
-    cEmployeeRole(r);
-  };
+  // const loginEmployee = (t, c, r) => {
+  //   window.localStorage.setItem("authToken", t);
+  //   window.localStorage.setItem("employeeId", c);
+  //   window.localStorage.setItem("employeeRole", r);
+  //   changeToken(t);
+  //   cEmployeeId(c);
+  //   cEmployeeRole(r);
+  // };
 
   const logout = () => {
     window.localStorage.removeItem("authToken");
-    window.localStorage.removeItem("clientId");
-    window.localStorage.removeItem("employeeId");
-    window.localStorage.removeItem("employeeRole");
+    window.localStorage.removeItem("userId");
+    window.localStorage.removeItem("username");
+    // window.localStorage.removeItem("employeeId");
+    // window.localStorage.removeItem("employeeRole");
     changeToken(undefined);
-    cClientId(undefined);
-    cEmployeeId(undefined);
-    cEmployeeRole(undefined);
+    cUserId(undefined);
+    cUsername(undefined);
+    // cEmployeeId(undefined);
+    // cEmployeeRole(undefined);
   };
 
   return (
@@ -84,8 +90,9 @@ function App() {
         <Navbar
           token={token}
           logout={logout}
-          clientId={clientId}
-          employeeId={employeeId}
+          userId={userId}
+          username={username}
+          // employeeId={employeeId}
         />
         <Switch>
           <Route path="/" exact>
@@ -98,31 +105,35 @@ function App() {
             <Contact />
           </Route>
           <Route exact path="/about">
-            <About />
+            <About 
+            client={client}
+            token={token}
+            username={username}
+            />
           </Route>
           <Route exact path="/quotes">
             {token ? (
               <Quotes
                 client={client}
                 token={token}
-                employeeId={employeeId}
-                clientId={clientId}
-                passedClientId={passedClientId}
-                clientChanger={(passedClientId) => {
-                  cPassedClientId(passedClientId);
+                // employeeId={employeeId}
+                userId={userId}
+                passedUserId={passedUserId}
+                UserChanger={(passedUserId) => {
+                  cPassedUserId(passedUserId);
                 }}
               />
             ) : (
-              <Login loggedIn={(t, c) => login(t, c)} client={client}></Login>
+              <Login loggedIn={(t, c, u) => login(t, c, u)} client={client}></Login>
             )}
           </Route>
-          <Route exact path="/booking">
+          {/* <Route exact path="/booking">
             <Booking client={client} token={token} clientId={clientId} />
-          </Route>
+          </Route> */}
           <Route exact path="/dashboard">
-            <Dashboard client={client} token={token} clientId={clientId} />
+            <Dashboard client={client} token={token} userId={userId} />
           </Route>
-          <Route exact path="/dashboardEmployee">
+          {/* <Route exact path="/dashboardEmployee">
             <DashboardEmployee
               client={client}
               token={token}
@@ -133,40 +144,12 @@ function App() {
               employeeId={employeeId}
               employeeRole={employeeRole}
             />
-          </Route>
-          <Route path="/test">
-            <Test />
-          </Route>
+          </Route> */}
           <Route path="/login">
-            <Login loggedIn={(t, c) => login(t, c)} client={client}></Login>
-          </Route>
-          <Route path="/loginEmployee">
-            <LoginEmployee
-              loggedInEmployee={(t, c, r) => loginEmployee(t, c, r)}
-              client={client}
-            ></LoginEmployee>
+            <Login loggedIn={(t, c, u) => login(t, c, u)} client={client}></Login>
           </Route>
           <Route path="/signup">
             <Signup client={client} />
-          </Route>
-          <Route path="/test">
-            {token ? (
-              <Test client={client} />
-            ) : (
-              <Container>
-                <Row>
-                  <Col>
-                    <Login
-                      loggedIn={(t, c) => login(t, c)}
-                      client={client}
-                    ></Login>
-                  </Col>
-                  <Col>
-                    <Signup client={client} />
-                  </Col>
-                </Row>
-              </Container>
-            )}
           </Route>
         </Switch>
       </Router>

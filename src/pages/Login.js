@@ -25,7 +25,7 @@ function Login(props) {
           throw new Error(response.data.message);
         }
         cDisabled(false);
-        props.loggedIn(response.data.token, response.data.clientId);
+        props.loggedIn(response.data.token, response.data.userId);
         history.push("/dashboard");
       })
       .catch((e) => {
@@ -38,7 +38,8 @@ function Login(props) {
     <>
       <br />
       <form className="login-form" onSubmit={(e) => submitHandler(e)}>
-        <h4>Login</h4> <br />
+        <h4>Login</h4> 
+        <br/>
         <input
           onChange={(e) => onChange(e, cUser)}
           type="text"
@@ -68,9 +69,7 @@ function Login(props) {
           If you dont have an account,{" "}
           <Link to="/signup">Please click here to register </Link>
         </p>
-        <p>
-          If you are an employee, <Link to="/loginEmployee">Log in here. </Link>
-        </p>
+        <br />
         <br />
       </form>
     </>

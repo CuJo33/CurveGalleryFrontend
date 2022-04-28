@@ -29,7 +29,6 @@ function Booking(props) {
   const [selectedTime, setSelectedTime] = useState(new Date());
 
   const autoFillBookings = (id) => {
-    console.log("within autofill");
     props.client
       .getClients(props.clientId)
       .then((response) => {

@@ -79,7 +79,7 @@ function SignUp(props) {
         <button id="signup-button" type="submit" disabled={disabled}>
           Submit
         </button>
-
+        <br />
         <p>
           If you already have an account{" "}
           <Link to="/login"> please click here to login </Link>{" "}
